@@ -1,4 +1,3 @@
-package resources;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -49,10 +48,10 @@ public class Card extends JPanel{
 		 */
 		public static String valueString(int value) {
 								
-			if(value == 11) return "J";
-			if(value == 12) return "Q";
-			if(value == 13) return "K";
-			if(value == 1) return "A";
+			if(value == 11) return "j";
+			if(value == 12) return "q";
+			if(value == 13) return "k";
+			if(value == 1) return "a";
 			
 			// Value between 2 and 10
 			return Integer.toString(value);
