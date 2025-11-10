@@ -86,6 +86,17 @@ public class Card extends JPanel{
 			return valueString(value) + " of " + suit.name() + " of " + isReversed;
 		}
 		
+		public Suit whatSuit() {
+			return suit;
+		}
+
+		public int whatValue() {
+			return value;
+		}
+		
+		// I stopped seeing Yuna and your changes.
+
+
 		/**
 		 * Class constructor
 		 * @param {Integer} value The value of the card, in [1,13]

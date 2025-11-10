@@ -18,6 +18,9 @@ import java.util.Collections;
 public class GUI extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
 
 	Solitaire game;
+	private JPanel topArea;
+	private JPanel leftSide;
+	private JPanel rightSide;
    public GUI(Solitaire game){
 	    this.game = game;
         //Create and set up the window.
@@ -44,7 +47,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         backArea.setSize(new Dimension(850,600));
         backArea.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.GREEN.darker()));
 
-        JPanel topArea = new JPanel();
+        this.topArea = new JPanel();
         topArea.setOpaque(false);
         topArea.setLayout(new BoxLayout(topArea, BoxLayout.X_AXIS));
         topArea.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED.darker()));
@@ -57,13 +60,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        
         topArea.setPreferredSize(new Dimension(850,350));
 
-		JPanel leftSide = new JPanel();
+		this.leftSide = new JPanel();
         leftSide.setOpaque(false);
         leftSide.setLayout(new GridLayout(1,2));
         leftSide.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.YELLOW.darker()));
         leftSide.setPreferredSize(new Dimension(100,250));
 
-		JPanel rightSide = new JPanel();
+		this.rightSide = new JPanel();
         rightSide.setOpaque(false);
         rightSide.setLayout(new GridLayout(1,2));
         rightSide.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.GRAY.darker()));
@@ -74,6 +77,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
         backArea.add(topArea, 0,0);
         backArea.add(bottomArea, 0, 1);
+        backArea.addMouseListener(this);  // Add mouse listener to backArea
         this.add(backArea);
 
         /*******
@@ -84,6 +88,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		*/
 
 		setUp(topArea, leftSide, rightSide);
+
+		
+
+		
+		
 		
 		
 		// bottomArea.add(draw, 1);
@@ -93,6 +102,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
     }
 
 	public void setUp(JPanel topArea, JPanel leftSide, JPanel rightSide) {
+		boolean won = game.won;
+
+		if (won == false) {
 		ArrayList<ArrayList<JLayeredPane>> colList = game.setUp();
 		topArea.add(colList.get(0).get(0), 0);
 		topArea.add(colList.get(0).get(1), 1);
@@ -110,8 +122,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 		leftSide.add(colList.get(2).get(0), 0);
 		leftSide.add(colList.get(3).get(0), 1);
-	}
 
+		this.revalidate();
+		this.repaint();
+		}
+		
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
@@ -128,7 +144,57 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		int xPosition = arg0.getX();
+		int yPosition = arg0.getY();
+		//where 0 = col1 -> 6 = col7, 7 = draw, 8 = drawed, 9 = hearts, 
+		// 10 = diamonds, 11 = clubs, 12 = spades.
 		
+		if (((xPosition >= 0 )&& (xPosition <= 120)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(0);
+		}
+		else if (((xPosition >= 121 )&& (xPosition <= 240)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(1);
+		}
+		else if (((xPosition >= 241 )&& (xPosition <= 360)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(2);
+		}
+		else if (((xPosition >= 361 )&& (xPosition <= 480)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(3);
+		}
+		else if (((xPosition >= 481 )&& (xPosition <= 600)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(4);
+		}
+		else if (((xPosition >= 601 )&& (xPosition <= 720)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(5);
+		}
+		else if (((xPosition >= 721 )&& (xPosition <= 850)) && ((yPosition >=0 ) && (yPosition <= 349))){
+			game.moveCard(6);
+		}
+		else if (((xPosition >= 0 )&& (xPosition <= 220)) && ((yPosition >=350 ) && (yPosition <= 600))){
+			game.moveCard(7);
+		}
+		else if (((xPosition >= 221 )&& (xPosition <= 425)) && ((yPosition >=350 ) && (yPosition <= 600))){
+			game.moveCard(8);
+		}
+		else if (((xPosition >= 426 )&& (xPosition <= 530)) && ((yPosition >=350 ) && (yPosition <= 600))){
+			game.moveCard(9);
+		}
+		else if (((xPosition >=  531)&& (xPosition <= 630)) && ((yPosition >=350 ) && (yPosition <= 600))){
+			game.moveCard(10);
+		}
+		else if (((xPosition >= 631 )&& (xPosition <= 740)) && ((yPosition >=350 ) && (yPosition <= 600))){
+			game.moveCard(11);
+		}
+		else if (((xPosition >= 741 )&& (xPosition <= 850)) && ((yPosition >=350 ) && (yPosition <= 600))){
+			game.moveCard(12);
+		}
+
+		System.out.println("Mouse clicked at " + arg0.getX() + "," + arg0.getY());
+		
+		// Refresh the display after each move
+		//setUp(topArea, leftSide, rightSide);
+	
+		        
 	}
 
 	@Override
